@@ -6,11 +6,22 @@ on:
             - main
 
 jobs:
-    build:
+    job-1:
         runs-on: ubuntu-latest
 
         steps:
             - name: echo hello world
               run: echo "Hello, World!"
+            
+            - name: create folder
+              run: mkdir session6
 
-        
+            - name: list folders
+              run: ls -l
+    
+    job2: 
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: list folders
+              run: ls -l
