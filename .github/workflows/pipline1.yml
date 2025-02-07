@@ -28,5 +28,8 @@ jobs:
     job-3:
         runs-on: ubuntu-latest
         steps:
-            - name: echo hello world again
-              run: echo "Hello, World again!"
+            - name: clone project
+              uses: actions/checkout@v4
+            
+            - name: list folders
+              run: ls -l
