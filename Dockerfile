@@ -4,6 +4,10 @@ FROM node as builder
 
 WORKDIR /usr/src/app
 
+ARG API_URL
+
+ENV API_URL=${API_URL}
+
 COPY ./package.json .
 
 RUN yarn install
