@@ -2,7 +2,7 @@ name: "frontend workflow"
 
 env:
     API_URL: https://api.edu-4.store/api
-    IMAGE_NAME: env.IMAGE_NAME
+    IMAGE_NAME: front-session6
 
 on:
     push:
