@@ -18,7 +18,14 @@ jobs:
             - name: run unit tests
               run: npm run test
 
-    # build and push
+    build_and_push:
+        needs: unit_testing
+        runs-on: ubuntu-latest
+        steps:
+            - name: build and push
+              run: docker build front-image .
+
+
 
     # deployment
       
