@@ -1,0 +1,24 @@
+name: "frontend workflow"
+
+on:
+    push:
+        branches: 
+          - main
+
+jobs:    
+    unit_testing:
+        runs-on: ubuntu-latest
+        steps:
+            - name: checkout repository
+              uses: actions/checkout@v4
+
+            - name: install dependencies
+              run: npm i
+
+            - name: run unit tests
+              run: npm run test
+
+    # build and push
+
+    # deployment
+      
