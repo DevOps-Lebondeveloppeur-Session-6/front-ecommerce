@@ -1,5 +1,8 @@
 name: "frontend workflow"
 
+env:
+    API_URL: https://api.edu-4.store/api
+
 on:
     push:
         branches: 
@@ -26,7 +29,7 @@ jobs:
               uses: actions/checkout@v4
 
             - name: build docker image
-              run: docker build -t talel12/front-session6 .
+              run: docker build -t talel12/front-session6 --build-arg ${{env.API_URL}} .
 
             - name: Login to Docker Hub
               uses: docker/login-action@v3
@@ -37,7 +40,24 @@ jobs:
             - name: push docker image to registry
               run: docker push talel12/front-session6
 
+            - name: "tag image"
+              run: docker tag talel12/front-session6 talel12/front-session6:${{ github.run_number }}
 
+            - name: "push tagged image"
+              run: docker push talel12/front-session6:${{ github.run_number }}
 
-    # deployment
-      
+    deployment_job:
+        runs-on: ubuntu-latest
+        needs: [ "build_and_push" ]
+        steps:
+            - name: "ssh access to vps and deploy"
+              uses: appleboy/ssh-action@v1.2.0
+              with:
+                host: ${{ secrets.VPS_HOST }}
+                username: ${{ secrets.VPS_USERNAME }}
+                password: ${{ secrets.VPS_PASSWORD }}
+                script: |
+                    cd /home/user/devops-ecommerce/front
+                    sudo git pull
+                    sudo docker compose pull
+                    sudo docker compose up -d --force-recreate --remove-orphans
